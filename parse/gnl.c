@@ -6,7 +6,7 @@
 /*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:08:40 by cguiot            #+#    #+#             */
-/*   Updated: 2021/04/22 14:36:30 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:07:43 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char *ft_joinone(char *line, char c)
 		i++;
 	}
 	free(line);
+	line = NULL;
 	if (c != '\n')
 		temp[i] = c;
 	else 

@@ -6,7 +6,7 @@
 /*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:02:34 by cguiot            #+#    #+#             */
-/*   Updated: 2021/04/25 17:00:58 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 13:53:24 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int take_size(char *str, int start)
 	{
 		size = size * 10 + str[start] - '0';
 		start++;
+		if (size >= 10000)
+			return (-1);
 	}
-//	dprintf(1, "\n||||||%i||||\n", size);
 	return (size);
 }
 
@@ -59,7 +60,7 @@ void init_struct(t_info *map)
 
 }
 
-int search_keys(char *line)
+int search_keys(char *line, t_info *map)
 {
 	if ((line[0]  == 'R') \
 		|| (line[0] == 'C') \
@@ -71,6 +72,5 @@ int search_keys(char *line)
 			|| (line[0]  == 'N' && line[1] == 'O') \
 			|| (line[0] == '\0'))
 		return (0);
-	return (rt(0, "une ligne comporte des information inconnues/inutiles")); //une ligne comporte des information inconnues
-	
+	return (rt(0, "- Unknow information or useless information", map));
 }
