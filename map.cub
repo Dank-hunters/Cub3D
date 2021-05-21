@@ -1,0 +1,21 @@
+R 1920 1080
+NO /Users/cguiot/stud/Cub3d/texture/test.xpm
+SO ./path_to_the_south_texture.xpm
+WE ./path_to_the_west_texture.xpm
+EA ./path_to_the_east_texture.xpm
+S ./path_to_the_sprite_texture.xpm
+F 220,100,0
+C 225,30,0
+
+11111111111
+100000000111111
+100000000000001
+1000000W0000001
+100000000111111
+1000000001
+1000000001
+1110001111
+  10001
+  10001
+  10001
+  11111

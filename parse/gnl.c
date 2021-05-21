@@ -6,28 +6,29 @@
 /*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:08:40 by cguiot            #+#    #+#             */
-/*   Updated: 2021/04/27 15:07:43 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/09 15:04:12 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	if (!str)
+		return (0);
+	while (str[i])
 		i++;
 	return (i);
 }
 
-char *ft_joinone(char *line, char c)
+char	*ft_joinone(char *line, char c)
 {
-	int len;
-	char *temp;
-	int i;
+	int		len;
+	char	*temp;
+	int		i;
 
 	i = 0;
 	len = ft_strlen(line);
@@ -39,22 +40,22 @@ char *ft_joinone(char *line, char c)
 		temp[i] = line[i];
 		i++;
 	}
-	free(line);
+	if (line != NULL)
+		free(line);
 	line = NULL;
 	if (c != '\n')
 		temp[i] = c;
-	else 
+	else
 		temp[i] = '\0';
 	temp[i + 1] = '\0';
 	return (temp);
 }
 
-
-int gnl(int fd, char **line)
+int	gnl(int fd, char **line)
 {
-	int ret;
-	int i;
-	char buff[1];
+	int		ret;
+	int		i;
+	char	buff[1];
 
 	i = 0;
 	ret = 1;
@@ -65,9 +66,9 @@ int gnl(int fd, char **line)
 	while (ret == 1)
 	{
 		ret = read(fd, buff, 1);
-		*line = ft_joinone(*line, *buff); 
+		*line = ft_joinone(*line, *buff);
 		if (buff[0] == '\n')
-			return(ret);
+			return (ret);
 		i++;
 	}
 	return (ret);

@@ -1,0 +1,7 @@
+Le cosinus de l’angle est égal au côté adjacent (A) sur l’hypoténuse (H) : cos(ɑ) = A / H.
+
+Le sinus de l’angle est égal à l'opposé (O) sur l'hypoténuse (H) : sin(ɑ) = O / H.
+
+La tangente de l’angle est égale à l'opposé (O) sur l’adjacent (A) : tan(ɑ) = O / A.
+
+radian = degré * 𝜋 / 180.
