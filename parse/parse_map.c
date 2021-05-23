@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 15:17:45 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/21 16:52:13 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/23 19:21:40 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int found_start_map(t_info *map)
 	return(rt(0, "no map found", map));
 }
 
-int init_tab_map(t_info *map, t_map *cub)
+int init_tab_map(t_info *map)
 {
 	int fd;
 	int ret;
@@ -50,7 +50,7 @@ int init_tab_map(t_info *map, t_map *cub)
 	line = NULL;
 	i = 0;
 	ret = 1;
-	cub->map = malloc(sizeof(char *) * (map->line_compt + 1));
+	map->map = malloc(sizeof(char *) * (map->line_compt + 1));
 	fd = open(map->filename, O_RDONLY);
 	while (map->start_map >= 0 && ret == 1)
 	{
@@ -59,23 +59,23 @@ int init_tab_map(t_info *map, t_map *cub)
 		if (map->start_map >= 0)
 			free_line(line);
 	}
-	cub->map[i++] = ft_join(line, map);
-	if (cub->map[i] == NULL)
+	map->map[i++] = ft_join(line, map);
+	if (map->map[i] == NULL)
 		return (rt(0, "-Erreur de malloc", map));
 	free_line(line);
 	while (ret == 1 && i < map->line_compt)
 	{
 		ret = gnl(fd, &line);
-		cub->map[i] = ft_join(line, map);
+		map->map[i] = ft_join(line, map);
 		free_line(line);
 		i++;
 	}
-	cub->map[i] = NULL;
+	map->map[i] = NULL;
 	close(fd);
 	return (0);
 }
 
-int	ft_found_pos(t_map *cub, t_info *map)
+int	ft_found_pos(t_info *map)
 {
 	int i;
 	int x;
@@ -84,22 +84,22 @@ int	ft_found_pos(t_map *cub, t_info *map)
 	i = 0;
 	y = 0;
 	x = 0;
-	cub->pos_y = 0;
-	cub->pos_x = 0;
-	while (cub->map[y] != 0)
+	map->pos_y = 0;
+	map->pos_x = 0;
+	while (map->map[y] != 0)
 	{
-		//	dprintf(1, "||%s||\n", cub->map[y]);
-		while(cub->map[y][x])
+		//	dprintf(1, "||%s||\n", map->map[y]);
+		while(map->map[y][x])
 		{
-			if (cub->map[y][x] == 'N' \
-					|| cub->map[y][x] == 'S' \
-					|| cub->map[y][x] == 'E' \
-					|| cub->map[y][x] == 'W')
+			if (map->map[y][x] == 'N' \
+					|| map->map[y][x] == 'S' \
+					|| map->map[y][x] == 'E' \
+					|| map->map[y][x] == 'W')
 			{
 				i++;
-				cub->pos_x = x;
-				cub->pos_y = y;
-				cub->view_d = cub->map[y][x];
+				map->pos_x = x + 0.5;
+				map->pos_y = y + 0.5;
+				map->view_d = map->map[y][x];
 			}
 			x++;
 		}
@@ -111,52 +111,52 @@ int	ft_found_pos(t_map *cub, t_info *map)
 	{
 		while(y < map->line_compt)
 		{
-			free_line(cub->map[y]);
+			free_line(map->map[y]);
 			y++;
 		}
-		free(cub->map);
+		free(map->map);
 		return (rt(0, "there are no player", map));
 	}
 	if (i >= 2)
 	{
 		while(y < map->line_compt)
 		{
-			free_line(cub->map[y]);
+			free_line(map->map[y]);
 			y++;
 		}
-		free(cub->map);
+		free(map->map);
 		return (rt(0, "there are more than 1 spawn point", map));
 	}
 	return (0);
 }
 
-int    fill_flood_map(t_map *cub, t_info *map, int y, int x)
+int    fill_flood_map(t_info *map, int y, int x)
 {
 	if (y < 0 || x < 0 || y > map->line_compt - 1 || \
 			x > map->line_size - 1)
 		return(rt(666, \
 			"-Error\n The map is not close.\n", map));
-	if (ft_ischar("|.$#", cub->map[y][x]))
+	if (ft_ischar("|.$#", map->map[y][x]))
 		return (0);
-	if (cub->map[y][x] == '1')
+	if (map->map[y][x] == '1')
 	{
-		cub->map[y][x] = '|';
+		map->map[y][x] = '|';
 		return (0);
 	}
-	if (cub->map[y][x] == '0')
-		cub->map[y][x] = '.';
-	if (cub->map[y][x] == '2')
-		cub->map[y][x] = '$';
-	if (cub->map[y][x] == '3')
-		cub->map[y][x] = '#';
-	fill_flood_map(cub, map, y - 1, x);
-	fill_flood_map(cub, map, y + 1, x);
-	fill_flood_map(cub, map, y, x - 1);
-	fill_flood_map(cub, map, y, x + 1);
+	if (map->map[y][x] == '0')
+		map->map[y][x] = '.';
+	if (map->map[y][x] == '2')
+		map->map[y][x] = '$';
+	if (map->map[y][x] == '3')
+		map->map[y][x] = '#';
+	fill_flood_map(map, y - 1, x);
+	fill_flood_map(map, y + 1, x);
+	fill_flood_map(map, y, x - 1);
+	fill_flood_map(map, y, x + 1);
 	return (0);
 }
 
-int test_map(t_info *map, t_map *cub)
+int test_map(t_info *map)
 {
 	int i;
 	int y;
@@ -165,15 +165,15 @@ int test_map(t_info *map, t_map *cub)
 	i = 0;
 	while (i < map->line_compt)
 	{
-		//	dprintf(1, "%s\n", cub->map[i]);
-		if (cub->map[i][0] == '\0')
+		//	dprintf(1, "%s\n", map->map[i]);
+		if (map->map[i][0] == '\0')
 		{
 			while(y < map->line_compt)
 			{
-				free_line(cub->map[y]);
+				free_line(map->map[y]);
 				y++;
 			}
-			free(cub->map);
+			free(map->map);
 			return (rt(0, "-Empty line in middle or a the end of map", map));
 		}
 		i++;
@@ -181,35 +181,35 @@ int test_map(t_info *map, t_map *cub)
 	return (0);
 }
 
-int parse_map(t_info *map, t_map *cub)
+int parse_map(t_info *map)
 {
 	int i = 0;
 	map->tofree = 0;
 	if (found_start_map(map) == 1)
 		return (1);
-	init_tab_map(map, cub);
-	if (test_map(map, cub) == 1)
+	init_tab_map(map);
+	if (test_map(map) == 1)
 		return (1);
-	if (ft_found_pos(cub, map) == 1)
+	if (ft_found_pos(map) == 1)
 		return (1);
-	//	dprintf(1, "mon joeur : %i, %i\n", cub->pos_y, cub->pos_x);
-	fill_flood_map(cub, map, cub->pos_y, cub->pos_x);
+	//	dprintf(1, "mon joeur : %i, %i\n", map->pos_y, map->pos_x);
+	fill_flood_map(map, map->pos_y, map->pos_x);
 	if (map->tofree == 2)
 	{
 		while (i < map->line_compt)
 		{
-			free_line(cub->map[i]);
+			free_line(map->map[i]);
 			i++;
 		}
-		free(cub->map);
+		free(map->map);
 		return (1);
 	}
-	/*	while (cub->map[i] != 0)
+	/*	while (map->map[i] != 0)
 		{
-		dprintf(1, "ma map : %s\n", cub->map[i]);
+		dprintf(1, "ma map : %s\n", map->map[i]);
 		i++;
 		}
-		dprintf(1, "ma map : %s\n", cub->map[i]);*/
+		dprintf(1, "ma map : %s\n", map->map[i]);*/
 	dprintf(1, "lets go parse");
 	return (0);
 }

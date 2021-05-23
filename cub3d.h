@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/21 18:22:49 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/23 20:17:25 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,17 @@ typedef struct s_coord
 
 }			t_coord;
 
+typedef struct	s_data
+{
 
-
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	void	*mlx;
+	void	*mlx_win;
+}				t_data;
 
 
 //stucture pour le paring
@@ -62,40 +71,24 @@ typedef struct s_info
 	char	*filename;
 	int		start_map;
 	int		tofree;
-}			t_info;
-
-typedef	struct s_map
-{
 	char	view_d;
 	char	**map;
 	float	pos_x;
 	float	pos_y;
 	float 	angle_ray;
 	float	proj;
-	float 	fov;
+	int 	fov;
 	float	horz_x;
 	float	horz_y;
-	float		angle_vision;
+	float	angle_vision;
 	float	vert_x;
 	float	vert_y;
 	float	h_dist;
 	float	v_dist;
 	float	gap;
-	t_info mapp;
-}		t_map;
+	t_data	img;
+}			t_info;
 
-typedef struct	s_data
-{
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	void	*mlx;
-	void	*mlx_win;
-	t_info map;
-}				t_data;
 
 int		ft_ischar(char *str, char c);
 int		ft_charchr(char c);
@@ -119,8 +112,7 @@ int		parse_so_texture(char *line, t_info *map, int i);
 int		parse_we_texture(char *line, t_info *map, int i);
 int		parse_ea_texture(char *line, t_info *map, int i);
 int		parse_sprite_texture(char *line, t_info *map, int i);
-int		parse_map(t_info *map, t_map *cub);
-
+int		parse_map(t_info *map);
 int		parse_line_part1(char *line, t_info *map);
 int		parse_line_part2(char *line, t_info *map);
 int		parse_line_part3(char *line, t_info *map);
@@ -137,19 +129,21 @@ int		check_info_here(t_info *map);
 
 int		main(int ac, char **av);
 
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int    graph(t_info *map, t_map *cub);
+void    my_mlx_pixel_put(t_info *map, int x, int y, int color);
+int    graph(t_info *map);
+int	key_hook(int keycode, t_info *map);
 
 
 
+void first_horz(t_info *map, int angle_ray);
+void first_vert(t_info *map, int angle_ray);
+void found_wall_hor(t_info *map, int angle_ray);
+void found_wall_vert(t_info *map, int angle_ray);
 
-void first_horz(t_map *cub);
-void first_vert(t_map *cub);
-void found_wall_hor(t_map *cub, t_info *map);
 
-void found_wall_vert(t_map *cub, t_info *map);
-int init_vars(t_idd *value, t_info *map, t_map *cub);
-
+void initss(t_info *map);
+int	creat_img(int keycode,t_info *map);
+void	creat_col(t_info *map, int x);
 #endif 
 
 

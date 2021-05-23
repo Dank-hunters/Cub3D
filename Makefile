@@ -10,7 +10,8 @@ SRCS        = parse/gnl.c \
 			  graph/utils_to_mlx.c \
 			  graph/get_rgb.c \
 			  graph/raycasting.c \
-			  graph/get_infos.c 
+			  graph/get_infos.c \
+			  graph/init_first_img.c
 
 HEADERS        = cub3d.h
 
