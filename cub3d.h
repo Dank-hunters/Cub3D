@@ -6,12 +6,15 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/23 20:17:25 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/24 17:18:35 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 
 # include <math.h>
 # include <stdio.h>
@@ -86,6 +89,9 @@ typedef struct s_info
 	float	h_dist;
 	float	v_dist;
 	float	gap;
+
+	int		turnright;
+	int		turnleft;
 	t_data	img;
 }			t_info;
 
@@ -142,8 +148,7 @@ void found_wall_vert(t_info *map, int angle_ray);
 
 
 void initss(t_info *map);
-int	creat_img(int keycode,t_info *map);
-void	creat_col(t_info *map, int x);
+int	creat_img(t_info *map);
 #endif 
 
 
