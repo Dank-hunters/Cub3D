@@ -6,11 +6,12 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 17:08:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/24 17:18:40 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/24 21:01:55 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#define WIN_X 1920
 
 void initss(t_info *map)
 {
@@ -30,8 +31,8 @@ void initss(t_info *map)
 	if (map->view_d == 'E')
 		map->angle_vision = 0; 
 	map->angle_ray = map->angle_vision + 30 ;
-	map->proj = ((float)map->res_x / 2) / (float)tan(map->fov/2 * (M_PI/180));
-	map->gap = (float)map->fov/(float)map->res_x;
+	map->proj = (map->res_x / 2) / tan((map->fov/2) * (M_PI/180));
+	map->gap = ((float)map->fov / (float)map->res_x);
 }
 
 int		keypress(int key, t_info *map)
@@ -60,8 +61,9 @@ int		graph(t_info *map)
 	int i;
 	
 	i = 0;
-	dprintf(1, "pkkkkkkkkkkk");
+
 	initss(map);
+		dprintf(1, "%f\n", map->gap);
 	map->img.mlx = mlx_init();
 	
 	map->img.mlx_win = mlx_new_window(map->img.mlx, map->res_x, map->res_y, "Hello world!");

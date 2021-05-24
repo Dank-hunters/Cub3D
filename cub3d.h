@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/24 17:18:35 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/24 21:02:01 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct s_info
 	char	**map;
 	float	pos_x;
 	float	pos_y;
-	float 	angle_ray;
-	float	proj;
+	float 	angle_ray;s
+	int	proj;
 	int 	fov;
 	float	horz_x;
 	float	horz_y;
