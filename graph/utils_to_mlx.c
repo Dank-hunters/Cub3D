@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 17:08:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/24 21:01:55 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/25 20:58:46 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int		keypress(int key, t_info *map)
 		map->turnleft = 1;
 	if (key == KEY_RIGHT)
 		map->turnright = 1;
+	/*if (key == KEY_UP)
+		map->goup = 1;
+	if (key == KEY_DOWN)
+		map->godown = 1;*/
 	return (1);
 }
 
@@ -50,6 +54,10 @@ int		keyrelease(int key, t_info *map)
 		map->turnleft = 0;
 	if (key == KEY_RIGHT)
 		map->turnright = 0;
+	/*if (key == KEY_UP)
+		map->goup = 0;
+	if (key == KEY_DOWN)
+		map->godown = 0;*/
 	return (1);
 }
 

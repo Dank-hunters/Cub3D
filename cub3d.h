@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/24 21:02:01 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/25 20:58:45 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
+# define KEY_UP 13
+# define KEY_DOWN 1
 
 # include <math.h>
 # include <stdio.h>
@@ -78,8 +80,8 @@ typedef struct s_info
 	char	**map;
 	float	pos_x;
 	float	pos_y;
-	float 	angle_ray;s
-	int	proj;
+	float 	angle_ray;
+	int		proj;
 	int 	fov;
 	float	horz_x;
 	float	horz_y;
@@ -141,10 +143,10 @@ int	key_hook(int keycode, t_info *map);
 
 
 
-void first_horz(t_info *map, int angle_ray);
-void first_vert(t_info *map, int angle_ray);
-void found_wall_hor(t_info *map, int angle_ray);
-void found_wall_vert(t_info *map, int angle_ray);
+void first_horz(t_info *map, float angle_ray);
+void first_vert(t_info *map, ft angle_ray);
+void found_wall_hor(t_info *map, float angle_ray);
+void found_wall_vert(t_info *map, float angle_ray);
 
 
 void initss(t_info *map);
