@@ -6,23 +6,19 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:58:30 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/25 20:58:43 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 15:41:12 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	first_horz(t_info *map, float angle_ray)
+void	first_inter(t_info *map, float angle_ray)
 {
 	if (angle_ray >= 0 && angle_ray <= 180) 
 		map->horz_y = floor(map->pos_y) - 0.001;
 	else
 		map->horz_y = floor(map->pos_y);
 	map->horz_x = map->pos_x + (((float)map->pos_y - map->horz_y )/ tan(angle_ray * (M_PI/180)));
-}
-
-void first_vert(t_info *map, float angle_ray)
-{
 	if ((angle_ray >= 0 && angle_ray <= 90) || (angle_ray >= 270 && angle_ray <= 360))
 		map->vert_x = floor(map->pos_x) + 1.0;
 	else 
@@ -42,11 +38,7 @@ void found_wall_hor(t_info *map, float angle_ray)
 			(int)map->horz_x < map->line_size && \
 			(int)map->horz_y >= 0 && \
 			(int)map->horz_y < map->line_compt && \
-			(map->map[(int)map->horz_y][(int)map->horz_x] == '.' || \
-			(map->map[(int)map->horz_y][(int)map->horz_x] == 'N' ||\
-			map->map[(int)map->horz_y][(int)map->horz_x] == 'W' ||\
-			map->map[(int)map->horz_y][(int)map->horz_x] == 'E' ||\
-			map->map[(int)map->horz_y][(int)map->horz_x] == 'S')))
+			(map->map[(int)map->horz_y][(int)map->horz_x] == '.'))
 	{
 		if (angle_ray <= 90)
 		{
@@ -83,11 +75,7 @@ void found_wall_vert(t_info *map, float angle_ray)
 		(int)map->vert_x < map->line_size && \
 		(int)map->vert_y >= 0 && \
 		(int)map->vert_y < map->line_compt && \
-		(map->map[(int)map->vert_y][(int)map->vert_x] == '.' || \
-		(map->map[(int)map->vert_y][(int)map->vert_x] == 'N' || \
-		map->map[(int)map->vert_y][(int)map->vert_x] == 'E' || \
-		map->map[(int)map->vert_y][(int)map->vert_x] == 'W' || \
-		map->map[(int)map->vert_y][(int)map->vert_x] == 'S')))
+		(map->map[(int)map->vert_y][(int)map->vert_x] == '.'))
 	{
 
 		if (angle_ray <= 90)

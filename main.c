@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 15:27:47 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/25 20:58:50 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 16:24:53 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ int main(int ac, char **av)
 	if (parse(av, &map) == 1)
 		return (1);
 	dprintf(1, "\n");
-			while(map.map[i])
-		{	
-			dprintf(1, "%s\n", map.map[i]);
-			i++;
-		}
 		//dprintf(1, "\nx = %f, y = %f, taille ligne : %i, nombre ligne : %i, res x: %i, res y %i\n",	cub.pos_x, cub.pos_y, map.line_size, map.line_compt, map.res_x, map.res_y);
 	i = 0;
 	graph(&map);

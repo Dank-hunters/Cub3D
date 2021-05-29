@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 19:49:35 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/25 20:58:47 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 16:24:00 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ void	event(t_info *map)
 		map->angle_ray += 3;
 	if (map->turnright == 1)
 		map->angle_ray -= 3;
-	/*if (map->goup == 1)
-		map->pos_x -= 3;
-	if (map->dodown == 1)
-		map->angle_ray -= 3;*/
-
+/*	if (map->angle_ray <= 90 )
+	{
+		if (map->goup == 1)
+			map->pos_x -= 3;
+		if (map->dodown == 1)
+			map->angle_ray -= 3;
+	}*/
 }
 
 void	creat_col(t_info *map, int x)
@@ -67,7 +69,7 @@ void	creat_col(t_info *map, int x)
 		dist = map->v_dist;
 	else 
 		dist = map->h_dist;
-	dprintf(1, "x = %d dist = %f\n", x, dist);
+	//dprintf(1, "x = %d dist = %f\n", x, dist);
 	h_wall = (float)1/dist * map->proj;
 	y = (map->res_y * 0.5f) + (h_wall * 0.5f);
 	while (i < h_wall)
@@ -100,8 +102,7 @@ int	creat_img(t_info *map)
 		{
 			angle_ray = 360.f + angle_ray;
 		}
-		first_horz(map, angle_ray);
-		first_vert(map, angle_ray);
+		first_inter(map, angle_ray);
 		found_wall_hor(map, angle_ray);
 		found_wall_vert(map, angle_ray);
 		map->h_dist = sqrt(pow(map->horz_x - map->pos_x, 2) + pow(map->horz_y - map->pos_y, 2));

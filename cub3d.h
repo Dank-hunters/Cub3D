@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/25 20:58:45 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 16:49:41 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,12 @@ int		check_info_here(t_info *map);
 int		main(int ac, char **av);
 
 void    my_mlx_pixel_put(t_info *map, int x, int y, int color);
-int    graph(t_info *map);
-int	key_hook(int keycode, t_info *map);
+int		graph(t_info *map);
+int		key_hook(int keycode, t_info *map);
 
 
 
-void first_horz(t_info *map, float angle_ray);
-void first_vert(t_info *map, ft angle_ray);
+void first_inter(t_info *map, float angle_ray);
 void found_wall_hor(t_info *map, float angle_ray);
 void found_wall_vert(t_info *map, float angle_ray);
 

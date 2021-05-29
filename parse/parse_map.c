@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 15:17:45 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/23 19:21:40 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 16:48:15 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int	ft_found_pos(t_info *map)
 					|| map->map[y][x] == 'W')
 			{
 				i++;
-				map->pos_x = x + 0.5;
-				map->pos_y = y + 0.5;
+				map->pos_x = x;
+				map->pos_y = y;
 				map->view_d = map->map[y][x];
+				dprintf(1, "le x : %i le Y : %i et les float : X : %f Y : %f", x, y, map->pos_x, map->pos_y);
 			}
 			x++;
 		}
@@ -192,7 +193,6 @@ int parse_map(t_info *map)
 		return (1);
 	if (ft_found_pos(map) == 1)
 		return (1);
-	//	dprintf(1, "mon joeur : %i, %i\n", map->pos_y, map->pos_x);
 	fill_flood_map(map, map->pos_y, map->pos_x);
 	if (map->tofree == 2)
 	{
@@ -204,12 +204,6 @@ int parse_map(t_info *map)
 		free(map->map);
 		return (1);
 	}
-	/*	while (map->map[i] != 0)
-		{
-		dprintf(1, "ma map : %s\n", map->map[i]);
-		i++;
-		}
-		dprintf(1, "ma map : %s\n", map->map[i]);*/
 	dprintf(1, "lets go parse");
 	return (0);
 }

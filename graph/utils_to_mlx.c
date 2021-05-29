@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 17:08:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/25 20:58:46 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/26 16:37:18 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ int		graph(t_info *map)
 	
 	i = 0;
 
+	map->map[(int)map->pos_y][(int)map->pos_x] = '.';
+	while(map->map[i])
+	{	
+		dprintf(1, "%s\n", map->map[i]);
+		i++;
+	}
 	initss(map);
 		dprintf(1, "%f\n", map->gap);
 	map->img.mlx = mlx_init();
