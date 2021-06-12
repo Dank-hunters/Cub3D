@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/26 16:49:41 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 21:31:16 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
-# define KEY_UP 13
-# define KEY_DOWN 1
+# define KEY_FORWARD 13
+# define KEY_BACKWARD 1
+# define KEY_GOLEFT 0
+# define KEY_GORIGHT 2
+# define KEY_LEAVE 53
 
 # include <math.h>
 # include <stdio.h>
@@ -25,27 +28,27 @@
 # include <unistd.h>
 # include <mlx.h>
 
-typedef struct s_idd 
+typedef struct	s_text
 {
-int gap; // angle d un pixel par raport au joueur
-int proj;  // distance entre le joueur et l ecran
-}				t_idd;
 
-typedef struct s_coord
-{
-	int x_start;
-	int y_start;
-	int x_end;
-	int y_end;
-	int step;
+	void	*img;
+	int 	width;
+	int		height;
+	int		*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	void	*mlx;
+	void	*mlx_win;
+}				t_text;
 
-}			t_coord;
 
 typedef struct	s_data
 {
 
 	void	*img;
-	char	*addr;
+
+	int		*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -57,6 +60,13 @@ typedef struct	s_data
 //stucture pour le paring
 typedef struct s_info
 {
+	t_text 	xpm[4];
+	float	h_wall;
+	int		winx;
+	int		winy;
+	int		goright;
+	int		goleft;
+	int		esc;
 	int		pass;
 	int		res_x;
 	int		res_y;
@@ -91,13 +101,16 @@ typedef struct s_info
 	float	h_dist;
 	float	v_dist;
 	float	gap;
-
+	float	n_angle_ray;
 	int		turnright;
 	int		turnleft;
+	int		forward;
+	int		backward;
+	int		not_close;
 	t_data	img;
 }			t_info;
 
-
+void	ft_putstr(char *str);
 int		ft_ischar(char *str, char c);
 int		ft_charchr(char c);
 int		ft_parse_char(char *line);
@@ -143,13 +156,18 @@ int		key_hook(int keycode, t_info *map);
 
 
 
-void first_inter(t_info *map, float angle_ray);
-void found_wall_hor(t_info *map, float angle_ray);
-void found_wall_vert(t_info *map, float angle_ray);
+void	first_inter(t_info *map);
+void	found_wall_hor(t_info *map);
+void	found_wall_vert(t_info *map);
+int		create_trgb(int t, int r, int g, int b);
 
+int		keyrelease(int key, t_info *map);
+int		keypress(int key, t_info *map);
+void	event(t_info *map);
+void	initss(t_info *map);
+int		creat_img(t_info *map);
 
-void initss(t_info *map);
-int	creat_img(t_info *map);
+void	add_text(t_info *map, float dist, int x);
 #endif 
 
 

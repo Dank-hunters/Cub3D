@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 19:49:35 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/26 16:24:00 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 21:37:34 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,16 @@ void	my_mlx_pixel_put(t_info *map, int x, int y, int color)
 {
 	char	*dst;
 
-	//dprintf(1, "il le fait");
-	dst = map->img.addr + (y * map->img.line_length + x * (map->img.bits_per_pixel / 8));
+	dst = (char *)map->img.addr + (y * map->img.line_length + x * (map->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+unsigned int	*get_pixel_loc(t_info *map, int x, int y)
+{
+	char	*dst;
+
+	dst = (char *)map->img.addr + (y * map->img.line_length + x * (map->img.bits_per_pixel / 8));
+	return (unsigned int *)dst;
 }
 
 void	clear_my_win(t_info *map)
@@ -33,51 +40,68 @@ void	clear_my_win(t_info *map)
 		while (y > 0)
 		{
 			if (x >= 0 && x < map->res_x && y >= 0 && y < map->res_y )
-				my_mlx_pixel_put(map, x, y, 0xFF0000);
+				*get_pixel_loc(map, x, y) = create_trgb(0,map->r_floor, map->g_floor, map->b_floor);
 			y--;
 		}
 		x--;
 	}
 
 }
-void	event(t_info *map)
+
+void draw_col(t_info *map, int x, int wall_height)
 {
-	if (map->turnleft == 1)
-		map->angle_ray += 3;
-	if (map->turnright == 1)
-		map->angle_ray -= 3;
-/*	if (map->angle_ray <= 90 )
+	int	y;
+	int	limit;
+	unsigned int	*loc;
+
+	y = 0;
+	limit = (map->res_y / 2) - (wall_height / 2);
+	loc = get_pixel_loc(map, x, 0);
+	while (y < limit)
 	{
-		if (map->goup == 1)
-			map->pos_x -= 3;
-		if (map->dodown == 1)
-			map->angle_ray -= 3;
-	}*/
+		*get_pixel_loc(map, x, y++) = 0x000000FF;
+		// *loc = 0x000000FF;
+		// loc = (unsigned int *)((unsigned char *)loc + map->img.line_length);
+	}
+	limit += wall_height;
+//	while (y < limit && y < map->res_y)
+//		*get_pixel_loc(map, x, y++) = 0x00FFFFFF;
+	while (y < map->res_y)
+		*get_pixel_loc(map, x, y++) = 0x00BAABAB;
+	// while (i < map->h_wall)
+	// {
+	// 	if (x >= 0 && x < map->res_x && y - i >= 0 && y - i < map->res_y )		
+	// 		*get_pixel_loc(map, x, y - i) = 0xB8860B;
+	// 	i++;
+	// }
+	// while (i < map->res_y)
+	// {
+	// 			if (x >= 0 && x < map->res_x && y - i >= 0 && y - i < map->res_y )
+	// 				*get_pixel_loc(map, x, y - i) = 0;
+	// 	i++;
+	// }
 }
 
-void	creat_col(t_info *map, int x)
+void	creat_col(t_info *map, int x, float patch)
 {
 	float dist;
-	int h_wall;
 	int i;
-	float y;
+	//float y;
 
-	
 	i = 0;
-	h_wall = 0;
 	if (map->h_dist >= map->v_dist)
 		dist = map->v_dist;
 	else 
 		dist = map->h_dist;
-	//dprintf(1, "x = %d dist = %f\n", x, dist);
-	h_wall = (float)1/dist * map->proj;
-	y = (map->res_y * 0.5f) + (h_wall * 0.5f);
-	while (i < h_wall)
-	{
-		if (x >= 0 && x < map->res_x && y - i >= 0 && y - i < map->res_y )
-				my_mlx_pixel_put(map, x, y - i, 0xFFFFFF);
-		i++;
-	}
+	dist = dist * fabs(cos(patch * (M_PI/180)));
+	map->h_wall = 1/dist * map->proj;
+	//y = (map->res_y * 0.5f) + (map->h_wall * 0.5f);
+	draw_col(map, x, map->h_wall);
+		if (map->h_dist < map->v_dist)
+            map->winx = (int)(map->horz_x * map->xpm[0].width) % map->xpm[0].width;
+    	else 
+    		map->winx = (int)(map->vert_y * map->xpm[0].width) % map->xpm[0].width;
+	add_text(map, dist, x);
 
 }
 
@@ -85,34 +109,35 @@ void	creat_col(t_info *map, int x)
 int	creat_img(t_info *map)
 {
 	int	i;
-	float  angle_ray;
-
+	float	patch;
 	
-	clear_my_win(map);
+	//clear_my_win(map);
 	event(map);
-	angle_ray = map->angle_ray;
+	if (map->angle_ray >= 360)
+		map->angle_ray = map->angle_ray - 360.0f;
+	if (map->angle_ray < 0)
+		map->angle_ray = map->angle_ray + 360.f;
+	map->n_angle_ray = map->angle_ray + 30;
 	i = 0;
+	patch = (map->fov * -.5f) * -1;
+
 	while (i < map->res_x)
 	{
-		while (angle_ray >= 360)
-		{
-			angle_ray = angle_ray - 360.0f;
-		}
-		while (angle_ray <= 0)
-		{
-			angle_ray = 360.f + angle_ray;
-		}
-		first_inter(map, angle_ray);
-		found_wall_hor(map, angle_ray);
-		found_wall_vert(map, angle_ray);
+		if (map->n_angle_ray >= 360)
+			map->n_angle_ray = map->n_angle_ray - 360.0f;
+		if (map->n_angle_ray < 0)
+			map->n_angle_ray = map->n_angle_ray + 360.f;
+		first_inter(map);
+		found_wall_hor(map);
+		found_wall_vert(map);
 		map->h_dist = sqrt(pow(map->horz_x - map->pos_x, 2) + pow(map->horz_y - map->pos_y, 2));
 		map->v_dist = sqrt(pow(map->vert_x - map->pos_x, 2) + pow(map->vert_y - map->pos_y, 2));
-		creat_col(map, i);
-		angle_ray = (float)angle_ray - map->gap;
+		creat_col(map, i, patch);
+		map->n_angle_ray = map->n_angle_ray - map->gap;
+		patch = patch - map->gap;
+
 		i++;
 	}
 	mlx_put_image_to_window(map->img.mlx, map->img.mlx_win, map->img.img, 0, 0);
 	return (1);
 }
-
-

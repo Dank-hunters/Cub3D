@@ -55,10 +55,9 @@ int	rt(int param, char *str, t_info *map)
 	if (param == -3)
 		ft_putstr("- Data error in floor colorimetry\n");
 	ft_putstr(str);
-	if (param == 666)
-		map->tofree = 2;
-	else if (param > 0)
+	if (param >= 0)
 		ft_putnbr(param);
+	(void)map;
 	return (1);
 }
 

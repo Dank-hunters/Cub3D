@@ -10,7 +10,9 @@ SRCS        = parse/gnl.c \
 			  graph/utils_to_mlx.c \
 			  graph/get_rgb.c \
 			  graph/get_infos.c \
-			  graph/init_first_img.c
+			  graph/init_first_img.c \
+			  graph/event.c \
+			  graph/texture.c \
 
 HEADERS        = cub3d.h
 
@@ -21,7 +23,7 @@ MLXA        = MLX/libmlx.a
 
 NAME        = cub3d
 
-CFLAGS        = -g -fsanitize=address  -Wall -Wextra -Werror -I MLX
+CFLAGS        = -g -fsanitize=address  -Wall -Wextra -Werror -I MLX  -Ofast -march=native
 
 CC            = cc $(CFLAGS)
 

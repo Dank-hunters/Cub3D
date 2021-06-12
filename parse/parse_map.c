@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 15:17:45 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/26 16:48:15 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 18:30:12 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,18 +131,24 @@ int	ft_found_pos(t_info *map)
 	return (0);
 }
 
-int    fill_flood_map(t_info *map, int y, int x)
+void error(t_info *map)
+{
+	map->not_close = 6;
+	ft_putstr("-Error\nThe map is not close");
+	exit(0);
+}
+
+void    fill_flood_map(t_info *map, int y, int x)
 {
 	if (y < 0 || x < 0 || y > map->line_compt - 1 || \
 			x > map->line_size - 1)
-		return(rt(666, \
-			"-Error\n The map is not close.\n", map));
+		error(map);
 	if (ft_ischar("|.$#", map->map[y][x]))
-		return (0);
+		return;
 	if (map->map[y][x] == '1')
 	{
 		map->map[y][x] = '|';
-		return (0);
+		return ;
 	}
 	if (map->map[y][x] == '0')
 		map->map[y][x] = '.';
@@ -154,7 +160,6 @@ int    fill_flood_map(t_info *map, int y, int x)
 	fill_flood_map(map, y + 1, x);
 	fill_flood_map(map, y, x - 1);
 	fill_flood_map(map, y, x + 1);
-	return (0);
 }
 
 int test_map(t_info *map)
@@ -194,7 +199,7 @@ int parse_map(t_info *map)
 	if (ft_found_pos(map) == 1)
 		return (1);
 	fill_flood_map(map, map->pos_y, map->pos_x);
-	if (map->tofree == 2)
+	if (map->not_close == 6)
 	{
 		while (i < map->line_compt)
 		{
@@ -202,7 +207,7 @@ int parse_map(t_info *map)
 			i++;
 		}
 		free(map->map);
-		return (1);
+		return (rt(0, "The map is not close", map));
 	}
 	dprintf(1, "lets go parse");
 	return (0);
