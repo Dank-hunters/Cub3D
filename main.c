@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 15:27:47 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/12 21:13:56 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/20 16:07:27 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,17 @@ int	parse(char **av, t_info *map)
 	return (0);
 }
 
-/*void	test()
-{
-	t_map *cub;
+//int get_xpm(t_info *map)
 
-	dprintf(1, "cub->");
-
-
-}*/
-
-void	init_imp(t_info *map)
+int	init_imp(t_info *map)
 {
 	int i;
 	i = 0;
-map->map[(int)map->pos_y][(int)map->pos_x] = '.';
+
+//	if (init_text(t_info *map) >= 1)
+//		clean_and_quit()
+
+	map->map[(int)map->py][(int)map->px] = '.';
 	while (map->map[i])
 	{	
 		dprintf(1, "%s\n", map->map[i]);
@@ -68,42 +65,46 @@ map->map[(int)map->pos_y][(int)map->pos_x] = '.';
 	map->img.img = mlx_new_image(map->img.mlx, map->res_x, map->res_y);
 	if (map->img.img == NULL)
 		dprintf(1, "img creation failled");
-	map->img.addr = (int *)mlx_get_data_addr(map->img.img, &map->img.bits_per_pixel, &map->img.line_length,
+	map->img.addr = (int *)mlx_get_data_addr(map->img.img, &map->img.bpp, &map->img.line_len,
 								&map->img.endian);
 	if (map->img.addr == NULL)
 		dprintf(1, "img creation failled");
 	//////////////////////////////////////////////////////////////////
-		map->xpm[0].img = mlx_xpm_file_to_image(map->img.mlx, map->path_to_no_texture, &map->xpm[0].width, &map->xpm[0].height);
-    if (map->xpm[0].img != NULL)
-	{
-        map->xpm[0].addr = (int *)mlx_get_data_addr(map->xpm[0].img, &map->xpm[0].bits_per_pixel, &map->xpm[0].line_length,
-					&map->xpm[0].endian);
+	file_to_img(map);
+	if (init_text(map) >= 1)
+		return (1);
+	return (0);
 	}
-	else
-		dprintf(1, "ta mere");
-	if  (map->xpm[0].addr == NULL)
-       {
-           dprintf(1, "ta mere ");
-           exit(0);
-       }
+
+void	free_map(t_info *map)
+{
+	int	i;
+
+	i = 0;
+	while (map->map[i])
+	{
+	//	free_line(map->map[i]);
+		i++;
+	}
+	mlx_destroy_image(map->img.mlx, map->img.img);
+	mlx_destroy_window(map->img.mlx, map->img.mlx_win);
 }
+
 int main(int ac, char **av)
 {
 	t_info	map;
-	//char *lol;
 
 	int i = 0;
-//	lol = malloc(sizeof(char) * 5);
 	(void)av;
 	if (ac == 1)
 		return (rt(0, "-Missing map config", &map));
 	if (parse(av, &map) == 1)
 		return (1);
 	dprintf(1, "\n");
-		//dprintf(1, "\nx = %f, y = %f, taille ligne : %i, nombre ligne : %i, res x: %i, res y %i\n",	cub.pos_x, cub.pos_y, map.line_size, map.line_compt, map.res_x, map.res_y);
 	i = 0;
-	dprintf(1, "les path: \nNO : %s,\n So: %s,\n EA : %s,\n WE: %s,\n SP :%s", map.path_to_no_texture, map.path_to_so_texture, map.path_to_ea_texture, map.path_to_we_texture, map.path_to_sprite_texture);
-	init_imp(&map);
+	//dprintf(1, "%s", map.pt_no_t);
+	if (init_imp(&map) == 1)
+		free_map(&map);
 	if (graph(&map) == 0)
 		return(0);
 	return (0);

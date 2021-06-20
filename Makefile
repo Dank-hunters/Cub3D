@@ -6,6 +6,8 @@ SRCS        = parse/gnl.c \
 			  parse/parse_utils.c \
 			  parse/utils.c \
 			  parse/utils_to_map.c \
+			  parse/minolib.c \
+			  parse/utils_to_map2.c \
 			  main.c \
 			  graph/utils_to_mlx.c \
 			  graph/get_rgb.c \
@@ -23,9 +25,9 @@ MLXA        = MLX/libmlx.a
 
 NAME        = cub3d
 
-CFLAGS        = -g -fsanitize=address  -Wall -Wextra -Werror -I MLX  -Ofast -march=native
+CFLAGS        =  -Wall -Wextra -Werror  -I MLX -Ofast -march=native 
 
-CC            = cc $(CFLAGS)
+CC            = gcc $(CFLAGS)
 
 RM            = rm -f
 

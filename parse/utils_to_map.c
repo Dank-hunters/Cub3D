@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 11:10:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/05/21 16:49:04 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/20 16:06:39 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	*ft_join(char *line, t_info *map)
 
 	i = 0;
 	dest = malloc(sizeof(char) * (map->line_size + 1));
+	if (dest == NULL)
+		return (NULL);
 	while (line[i])
 	{
 		dest[i] = line[i];
