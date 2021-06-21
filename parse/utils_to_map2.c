@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:26:16 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 16:01:49 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 20:04:11 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	found_start_map(t_info *map)
 		if (line[0] == '\0')
 			map->start_map++;
 		if (compt <= map->start_map)
-			;//free_line(line);
+			free_line(line);
 	}
 	if (line[0] == '1' || line[0] == ' ')
 		return (take_info_needed(map, fd, line));
@@ -42,14 +42,14 @@ int	found_start_map(t_info *map)
 void	cut(int fd, char *line, t_info *map)
 {
 	int	ret;
-	int i;
+	int	i;
 
 	i = 1;
 	ret = 1;
 	while (ret == 1 && i < map->line_compt)
 	{
 		ret = gnl(fd, &line);
-		map->map[i] = ft_join(line, map);
+		map->map[i] = ft_join(line, map, 1);
 		free_line(line);
 		i++;
 	}
@@ -60,11 +60,9 @@ int	init_tab_map(t_info *map)
 {
 	int		fd;
 	int		ret;
-	int		i;
 	char	*line;
 
 	line = NULL;
-	i = 0;
 	ret = 1;
 	map->map = malloc(sizeof(char *) * (map->line_compt + 1));
 	if (map->map == NULL)
@@ -78,7 +76,7 @@ int	init_tab_map(t_info *map)
 			free_line(line);
 	}
 	ft_putnbr(map->line_compt);
-	map->map[i] = ft_join(line, map);
+	map->map[0] = ft_join(line, map, 1);
 	if (map->map[0] == NULL)
 		return (rt(0, "-Erreur de malloc", map));
 	cut(fd, line, map);

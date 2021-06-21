@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 19:49:35 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 17:36:16 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 20:05:26 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ unsigned int	*get_pixel_loc(t_info *map, int x, int y)
 {
 	char	*dst;
 
-	dst = (char *)map->img.addr + (y * map->img.line_len + x * (map->img.bpp / 8));
+	dst = (char *)map->img.addr + (y * map->img.line_len + x
+			* (map->img.bpp / 8));
 	return ((unsigned int *)dst);
 }
 
@@ -29,18 +30,22 @@ void	draw_col(t_info *map, int x, int wall_height)
 	limit = (map->res_y / 2) - (wall_height / 2);
 	while (y < limit)
 	{
-		*get_pixel_loc(map, x, y++) = 0x00CACADF;
+		if (x < map->res_x && y < map->res_y)
+			*get_pixel_loc(map, x, y++) = map->fcolor;
 	}
 	limit += wall_height;
 	while (y < map->res_y)
-		*get_pixel_loc(map, x, y++) = 0x00494833;
+	{
+		if (x < map->res_x && y < map->res_y)
+			*get_pixel_loc(map, x, y++) = map->ccolor;
+	}
 }
 
 void	creat_col(t_info *map, int x, float patch)
 {
 	float	dist;
 	int		i;
-	int hoz;
+	int		hoz;
 
 	hoz = 0;
 	i = 0;
@@ -54,9 +59,13 @@ void	creat_col(t_info *map, int x, float patch)
 		hoz = 2;
 		dist = map->h_dist;
 	}
-	dist = dist * fabs(cos(patch * (M_PI / 180)));
+	dist = dist * cos(patch * (M_PI / 180));
 	map->h_wall = 1 / dist * map->proj;
+	if (map->na_ray >= 90 && map->na_ray <= 270)
+		map->hx -= 0.0001;
 	map->winy = (map->res_y / 2) - (map->h_wall / 2);
+	if (map->na_ray >= 0 && map->na_ray <= 180)
+		map->hy -= 0.0001;
 	draw_col(map, x, map->h_wall);
 	add_text(map, dist, x, hoz);
 }

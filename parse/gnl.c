@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:08:40 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/16 18:23:46 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 16:22:57 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	gnl(int fd, char **line)
 		return (-1);
 	line[0][0] = 0;
 	line[0][1] = 0;
-	while (ret == 1)
+	while (ret == 1 || ret == EOF)
 	{
 		ret = read(fd, buff, 1);
 		*line = ft_joinone(*line, *buff);

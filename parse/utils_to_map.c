@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 11:10:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 16:06:39 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 20:01:30 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,16 @@ int	ft_parse_char(char *line)
 	return (0);
 }
 
-char	*ft_join(char *line, t_info *map)
+char	*ft_join(char *line, t_info *map, int t)
 {
 	int		i;
 	char	*dest;
 
 	i = 0;
-	dest = malloc(sizeof(char) * (map->line_size + 1));
+	if (t == 1)
+		dest = malloc(sizeof(char) * (map->line_size + 1));
+	else
+		dest = malloc(sizeof(char) * (ft_strlen(line) + 1));
 	if (dest == NULL)
 		return (NULL);
 	while (line[i])
@@ -98,7 +101,7 @@ char	*ft_join(char *line, t_info *map)
 		dest[i] = line[i];
 		i++;
 	}
-	while (ft_strlen(line) != 0 && i < map->line_size)
+	while (t == 1 && ft_strlen(line) != 0 && i < map->line_size)
 	{
 		dest[i] = ' ';
 		i++;

@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 15:44:43 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 17:05:37 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_info
 	int		r_c;
 	int		g_c;
 	int		b_c;
+	int		ccolor;
+	int		fcolor;
 	char	*pt_no_t;
 	char	*pt_so_t;
 	char	*pt_we_t;
@@ -115,7 +117,7 @@ void	ft_putstr(char *str);
 int		ft_ischar(char *str, char c);
 int		ft_charchr(char c);
 int		ft_parse_char(char *line);
-char	*ft_join(char *line, t_info *map);
+char	*ft_join(char *line, t_info *map, int i);
 
 int		found_start_map(t_info *map);
 int		take_info_needed(t_info *map, int fd, char *line);
@@ -171,9 +173,9 @@ void	event(t_info *map);
 void	initss(t_info *map);
 int		creat_img(t_info *map);
 
-int init_text(t_info *map);
+int		init_text(t_info *map, int i);
 void	add_text(t_info *map, float dist, int x, int hoz);
-void file_to_img(t_info *map);
+void	file_to_img(t_info *map);
 void	free_map(t_info *map);
 
 

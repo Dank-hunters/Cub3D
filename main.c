@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 15:27:47 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 16:07:27 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 18:01:48 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,11 @@ int	parse(char **av, t_info *map)
 	return (0);
 }
 
-//int get_xpm(t_info *map)
 
 int	init_imp(t_info *map)
 {
 	int i;
 	i = 0;
-
-//	if (init_text(t_info *map) >= 1)
-//		clean_and_quit()
 
 	map->map[(int)map->py][(int)map->px] = '.';
 	while (map->map[i])
@@ -64,14 +60,13 @@ int	init_imp(t_info *map)
 		dprintf(1, "win creation failled");
 	map->img.img = mlx_new_image(map->img.mlx, map->res_x, map->res_y);
 	if (map->img.img == NULL)
-		dprintf(1, "img creation failled");
+		return(rt(0, "img creation failled", map));
 	map->img.addr = (int *)mlx_get_data_addr(map->img.img, &map->img.bpp, &map->img.line_len,
 								&map->img.endian);
 	if (map->img.addr == NULL)
 		dprintf(1, "img creation failled");
-	//////////////////////////////////////////////////////////////////
 	file_to_img(map);
-	if (init_text(map) >= 1)
+	if (init_text(map, 0) >= 1)
 		return (1);
 	return (0);
 	}
@@ -83,7 +78,7 @@ void	free_map(t_info *map)
 	i = 0;
 	while (map->map[i])
 	{
-	//	free_line(map->map[i]);
+		free_line(map->map[i]);
 		i++;
 	}
 	mlx_destroy_image(map->img.mlx, map->img.img);
@@ -95,6 +90,8 @@ int main(int ac, char **av)
 	t_info	map;
 
 	int i = 0;
+	map.px += 0.5;
+	map.py += 0.5;
 	(void)av;
 	if (ac == 1)
 		return (rt(0, "-Missing map config", &map));

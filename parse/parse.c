@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 14:48:34 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/16 18:33:46 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 20:01:03 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ int	parse_line_part2(char *line, t_info *map)
 		return (0);
 	if (line[0] == 'F')
 	{
+		map->pass++;
 		if (parse_floor_color(line, map, 1) == 1)
 			return (1);
 	}
 	else if (line[0] == 'C')
 	{
+		map->pass++;
 		if (parse_ceiling_color(line, map, 1) == 1)
 			return (1);
 	}
@@ -59,10 +61,7 @@ int	parse_line(char *line, t_info *map)
 	else if (parse_line_part2(line, map) == 1)
 		return (1);
 	else if (parse_line_part3(line, map) == 1)
-		{
-			//free_text(map);
-			return (1);
-		}
+		return (1);
 	else if (search_keys(line, map) == 1)
 		return (1);
 	if (map->r_f == -2 || map->r_f > 255)
@@ -79,8 +78,6 @@ int	parse_line(char *line, t_info *map)
 		return (rt(-3, "- The B floor interval is too long", map));
 	return (0);
 }
-
-
 
 int	start_parse(char **av, t_info *map)
 {

@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:54:15 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/20 16:08:35 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 20:05:36 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	keyrelease(int key, t_info *map)
 		map->goright = 0;
 	return (1);
 }
+
 int	collision(t_info *map, float x, float y)
 {
 	if (map->map[(int)(y)][(int)(x)] == '.')
@@ -90,19 +91,15 @@ void	event(t_info *map)
 	float	adds;
 	float	addc;
 
-	adds = (0.15 * (sin((map->a_ray) * (M_PI / 180))));
-	addc = (0.15 * (cos((map->a_ray) * (M_PI / 180))));
+	adds = ((float)0.15 * (sin((map->a_ray) * (M_PI / 180))));
+	addc = ((float)0.15 * (cos((map->a_ray) * (M_PI / 180))));
 	if (map->turnleft == 1)
 		map->a_ray += 1.2;
 	if (map->turnright == 1)
 		map->a_ray -= 1.2;
 	forback(map, adds, addc);
 	if (map->esc == 1)
-		{
-		//	mlx_destroy_image(map->img.mlx, map->img.img);
-		//	mlx_destroy_window(map->img.mlx, map->img.mlx_win);
-			free_map(map);
-		}
+		free_map(map);
 	if (map->esc == 1)
 		exit(0);
 }
