@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 19:21:14 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 20:23:14 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/23 18:56:54 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,34 @@ int	witch_text(t_info *map, int hoz)
 {
 	int	text;
 
-	text = 8;
-	if (hoz == 1 && map->vx - (int)map->vx <= 0.5)
+	text = 0;
+	if (hoz == 1 && map->vx - (int)map->vx < 0.5)
 		text = 2;
-	else if (hoz == 1 && map->vx - (int)map->vx > 0.5 )
+	else if (hoz == 1 && map->vx - (int)map->vx >= 0.5 )
 		text = 3;
-	else if (hoz == 2 && map->hy - (int)map->hy <= 0.5)
+	else if (hoz == 2 && map->hy - (int)map->hy < 0.5)
 		text = 1;
-	else if (hoz == 2 && map->hy - (int)map->hy > 0.5)
+	else if (hoz == 2 && map->hy - (int)map->hy >= 0.5)
 		text = 0;
 	return (text);
-}
+}/*
+int	witch_text(t_info *map, int hoz)
+{
+	int text;
+
+	text = 8;
+	if (hoz == 2 && map->na_ray >= 0 && map->na_ray <= 180)
+		text = 0;
+	else if (hoz == 1 && map->na_ray >= 180 && map->na_ray <= 360)
+		text = 1;
+	else if (hoz == 2 && map->na_ray >= 270 && map->na_ray <= 90)
+		text = 2;
+	else if (hoz == 1 && map->na_ray >= 90 && map->na_ray <= 270)
+		text = 3;
+	return(text);
+
+}*/
+
 
 void	add_text(t_info *map, float dist, int x, int hoz)
 {
@@ -94,7 +111,7 @@ void	add_text(t_info *map, float dist, int x, int hoz)
 	{
 		n_gap = (float)map->xpm[n].height / map->h_wall;
 		if (map->winy + i >= 0 && map->winy + i < map->res_y && y >= 0 && \
-				y < map->xpm[n].height && map->winx >= 0 && \
+				y <= map->xpm[n].height && map->winx >= 0 && \
 				map->winx <= map->xpm[n].width)
 			map->img.addr[(map->winy + i) *map->res_x + x]
 				= map->xpm[n].addr[(int)y * map->xpm[n].width + map->winx];

@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 14:48:34 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 20:01:03 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/22 19:59:00 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ int	parse_line_part3(char *line, t_info *map)
 	return (0);
 }
 
+void	free_path(t_info *map)
+{
+	free_line(map->pt_no_t);
+	free_line(map->pt_ea_t);
+	free_line(map->pt_we_t);
+	free_line(map->pt_so_t);
+}
+
 int	parse_line_part2(char *line, t_info *map)
 {
 	if (line && line[0] == '\0')
@@ -33,13 +41,19 @@ int	parse_line_part2(char *line, t_info *map)
 	{
 		map->pass++;
 		if (parse_floor_color(line, map, 1) == 1)
+		{
+			free_path(map);
 			return (1);
+		}
 	}
 	else if (line[0] == 'C')
 	{
 		map->pass++;
 		if (parse_ceiling_color(line, map, 1) == 1)
+		{
+			free_path(map);
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -54,16 +68,8 @@ int	parse_line_part1(char *line, t_info *map)
 	return (0);
 }
 
-int	parse_line(char *line, t_info *map)
-{
-	if (parse_line_part1(line, map) == 1)
-		return (1);
-	else if (parse_line_part2(line, map) == 1)
-		return (1);
-	else if (parse_line_part3(line, map) == 1)
-		return (1);
-	else if (search_keys(line, map) == 1)
-		return (1);
+int	parse_rgb(t_info *map)
+{	
 	if (map->r_f == -2 || map->r_f > 255)
 		return (rt(-3, "- The R floor interval is too long", map));
 	if (map->g_f == -2 || map->g_f > 255)
@@ -76,6 +82,24 @@ int	parse_line(char *line, t_info *map)
 		return (rt(-3, "- The G floor interval is too long", map));
 	if (map->b_c > 255 || map->b_c == -2)
 		return (rt(-3, "- The B floor interval is too long", map));
+	return (0);
+}
+
+int	parse_line(char *line, t_info *map)
+{
+	if (parse_line_part1(line, map) == 1)
+		return (1);
+	else if (parse_line_part2(line, map) == 1)
+		return (1);
+	else if (parse_line_part3(line, map) == 1)
+		return (1);
+	else if (parse_rgb(map) == 1)
+	{
+		free_path(map);
+		return (1);
+	}
+	else if (search_keys(line, map) == 1)
+		return (1);
 	return (0);
 }
 

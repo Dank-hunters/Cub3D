@@ -6,7 +6,7 @@
 /*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 13:18:31 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/16 18:25:48 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/22 19:55:13 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	rt(int param, char *str, t_info *map)
 	ft_putstr(str);
 	if (param > 0)
 		ft_putnbr(param);
-	ft_putstr("putain de ta mere");
 	(void)map;
 	return (1);
 }
@@ -50,7 +49,6 @@ int	check_info_here(t_info *map)
 			|| map->r_c == -1 || map->g_c == -1 \
 			|| map->b_c == -1)
 		return (1);
-	dprintf(1, "puuuuutain");
 	if (map->pt_no_t == NULL \
 			|| map->pt_so_t == NULL \
 			|| map->pt_we_t == NULL \

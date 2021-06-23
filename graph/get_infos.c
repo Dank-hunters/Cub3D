@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:58:30 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 20:24:44 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/23 19:05:06 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	first_inter(t_info *map)
 {
 	if (map->na_ray >= 0 && map->na_ray <= 180)
-		map->hy = floor(map->py) - 0.001;
+		map->hy = floor(map->py) - 0.0001;
 	else
 		map->hy = floor(map->py) + 1;
 	map->hx = map->px + (((float)map->py - map->hy) / \
@@ -24,7 +24,7 @@ void	first_inter(t_info *map)
 		(map->na_ray >= 270 && map->na_ray <= 360))
 		map->vx = floor(map->px) + 1.0;
 	else
-		map->vx = floor(map->px) - 0.001;
+		map->vx = floor(map->px) - 0.0001;
 	map->vy = map->py + (((float)map->px - map->vx) * \
 		tan(map->na_ray * (M_PI / 180)));
 }
@@ -37,12 +37,12 @@ void	found_wall_hor(t_info *map, float toadd_y, float toadd_x)
 	{
 		if (map->na_ray <= 90)
 		{
-			map->hy = map->hy - toadd_y - 0.0001;
+			map->hy = map->hy - toadd_y /*- 0.0001*/;
 			map->hx = map->hx + toadd_x;
 		}
 		else if (map->na_ray > 90 && map->na_ray <= 180)
 		{
-			map->hy = map->hy - toadd_y - 0.0001;
+			map->hy = map->hy - toadd_y/* - 0.0001*/;
 			map->hx = map->hx + toadd_x;
 		}
 		else if (map->na_ray > 180 && map->na_ray <= 270)
@@ -72,12 +72,12 @@ void	found_wall_vert(t_info *map, float toadd_y, float toadd_x)
 		else if (map->na_ray > 90 && map->na_ray <= 180)
 		{
 			map->vy = map->vy + toadd_y;
-			map->vx = map->vx - toadd_x - 0.0001;
+			map->vx = map->vx - toadd_x/* - 0.0001*/;
 		}
 		else if (map->na_ray > 180 && map->na_ray <= 270)
 		{
 			map->vy = map->vy + toadd_y;
-			map->vx = map->vx - toadd_x - 0.0001;
+			map->vx = map->vx - toadd_x /*- 0.0001*/;
 		}
 		else if (map->na_ray > 270 && map->na_ray <= 360)
 		{

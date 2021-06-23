@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 17:08:12 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 20:03:55 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/22 16:04:11 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	initss(t_info *map)
 		map->angle_vision = 0;
 	map->a_ray = map->angle_vision;
 	map->na_ray = map->angle_vision + map->fov * .5f ;
-	map->proj = (map->res_x / 2) / tan((map->fov / 2) * (M_PI / 180));
+	map->proj = (map->res_x * 0.5f) / tan((map->fov * 0.5f) * (M_PI / 180));
 	map->gap = ((float)map->fov / (float)map->res_x);
 	map->ccolor = create_trgb(0, map->r_c, map->g_c, map->b_c);
 	map->fcolor = create_trgb(0, map->r_f, map->g_f, map->b_f);

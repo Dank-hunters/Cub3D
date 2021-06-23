@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 19:49:35 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 20:05:26 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/23 18:55:52 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	creat_col(t_info *map, int x, float patch)
 	}
 	dist = dist * cos(patch * (M_PI / 180));
 	map->h_wall = 1 / dist * map->proj;
-	if (map->na_ray >= 90 && map->na_ray <= 270)
-		map->hx -= 0.0001;
 	map->winy = (map->res_y / 2) - (map->h_wall / 2);
-	if (map->na_ray >= 0 && map->na_ray <= 180)
-		map->hy -= 0.0001;
+//	if (map->na_ray >= 90 && map->na_ray <= 270)
+//		map->hy -= 0.00001;
+//	if (map->na_ray >= 0 && map->na_ray <= 180)
+//		map->vx -= 0.0001;
 	draw_col(map, x, map->h_wall);
 	add_text(map, dist, x, hoz);
 }
@@ -93,8 +93,8 @@ int	creat_img(t_info *map)
 	{
 		map->na_ray = turnback(map->na_ray);
 		first_inter(map);
-		found_wall_hor(map, 1.0f, 1 / tan(map->na_ray * (M_PI / 180)));
-		found_wall_vert(map, tan(map->na_ray * (M_PI / 180)), 1.0f);
+		found_wall_hor(map, 1.0f, (1 / tan(map->na_ray * (M_PI / 180))));
+		found_wall_vert(map, (tan(map->na_ray * (M_PI / 180))), 1.0f);
 		map->h_dist
 			= sqrt(pow(map->hx - map->px, 2) + pow(map->hy - map->py, 2));
 		map->v_dist
