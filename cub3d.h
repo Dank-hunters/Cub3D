@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:27:23 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/23 17:32:57 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 22:48:53 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,10 @@ int		key_hook(int keycode, t_info *map);
 
 
 void	first_inter(t_info *map);
-//void	found_wall_hor(t_info *map);
-//void	found_wall_vert(t_info *map);
-void	found_wall_vert(t_info *map, float toadd_x, float toadd_y);
-void	found_wall_hor(t_info *map, float toadd_x, float toadd_y);
+void	found_wall_hor(t_info *map, float ray);
+void	found_wall_vert(t_info *map, float ray);
+//void	found_wall_vert(t_info *map, float toadd_x, float toadd_y);
+//void	found_wall_hor(t_info *map, float toadd_x, float toadd_y);
 int		create_trgb(int t, int r, int g, int b);
 
 int		keyrelease(int key, t_info *map);

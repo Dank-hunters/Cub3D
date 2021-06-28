@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:02:03 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/22 19:55:17 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 22:48:42 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	parse_ceiling_color(char *line, t_info *map, int	i)
 	i = skip_num(line, i);
 	if (line[i])
 		return (rt(-1, "- Too few caracters after B. ", map));
-	free_line(line);
+	free(line);
 	return (0);
 }
 
@@ -66,6 +66,6 @@ int	parse_floor_color(char *line, t_info *map, int	i)
 	i = skip_num(line, i);
 	if (line[i])
 		return (rt(-3, "- Too few characters after B\n", map));
-	free_line(line);
+	free(line);
 	return (0);
 }

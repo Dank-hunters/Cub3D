@@ -6,11 +6,43 @@
 /*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 13:18:31 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/22 19:55:13 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 19:04:04 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
+
+void	ft_putnbr(int nb)
+{
+	char	n;
+
+	n = nb % 10 + 48;
+	if (nb >= 10)
+		ft_putnbr(nb / 10);
+	write(1, &n, 1);
+}
+
+int	free_line(char *line)
+{
+	if (line != NULL)
+	{
+		free(line);
+		line = NULL;
+	}
+	return (1);
+}
 
 int	rt(int param, char *str, t_info *map)
 {
@@ -23,7 +55,7 @@ int	rt(int param, char *str, t_info *map)
 	if (param == -3)
 		ft_putstr("- Data error in floor colorimetry\n");
 	ft_putstr(str);
-	if (param > 0)
+	if (param >= 0)
 		ft_putnbr(param);
 	(void)map;
 	return (1);
@@ -52,7 +84,7 @@ int	check_info_here(t_info *map)
 	if (map->pt_no_t == NULL \
 			|| map->pt_so_t == NULL \
 			|| map->pt_we_t == NULL \
-			|| map->pt_ea_t == NULL)
+			|| map->pt_ea_t == NULL )
 		return (1);
 	return (0);
 }

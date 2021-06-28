@@ -4,7 +4,7 @@ echo "
 ///////////teest 1 sans pb\\\\\\\\\\\\\\\\\\\\\\
 
 "
-gcc ../*.c  -g3 && ./a.out  map.cub
+gcc ../*.c && ./a.out  map.cub
 leaks -atExit -- ./a.out map.cub
 
 echo "

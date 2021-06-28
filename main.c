@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 15:27:47 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/21 18:01:48 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 22:48:46 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parse(char **av, t_info *map)
 	i = 0;
 	if (check_filename(av[1], map) == 1)
 		return (1);
-	if (start_parse(av, map))
+	if (start_parse(av, map) == 1)
 		return (1);
 	if (i == 0)
 	{
@@ -85,6 +85,14 @@ void	free_map(t_info *map)
 	mlx_destroy_window(map->img.mlx, map->img.mlx_win);
 }
 
+int	free_p(t_info *map)
+{
+	free(map->pt_ea_t);
+	free(map->pt_so_t);
+	free(map->pt_we_t);
+	free(map->pt_no_t);
+	return (1);
+}
 int main(int ac, char **av)
 {
 	t_info	map;
@@ -96,12 +104,19 @@ int main(int ac, char **av)
 	if (ac == 1)
 		return (rt(0, "-Missing map config", &map));
 	if (parse(av, &map) == 1)
-		return (1);
+		{
+			free_p(&map);
+			return (1);
+		}
 	dprintf(1, "\n");
 	i = 0;
 	//dprintf(1, "%s", map.pt_no_t);
 	if (init_imp(&map) == 1)
-		free_map(&map);
+		{
+			dprintf(1, "error ");
+			free_map(&map);
+			exit (0);
+		}
 	if (graph(&map) == 0)
 		return(0);
 	return (0);

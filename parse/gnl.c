@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: cguiot <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:08:40 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/22 19:39:30 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/05/09 15:04:12 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ int	gnl(int fd, char **line)
 	ret = 1;
 	*line = NULL;
 	*line = malloc(sizeof(char) * 2);
-	if (line == NULL)
-		return (-1);
 	line[0][0] = 0;
 	line[0][1] = 0;
-	while (ret == 1 || ret == EOF)
+	while (ret == 1)
 	{
 		ret = read(fd, buff, 1);
 		*line = ft_joinone(*line, *buff);

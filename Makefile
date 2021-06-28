@@ -6,8 +6,6 @@ SRCS        = parse/gnl.c \
 			  parse/parse_utils.c \
 			  parse/utils.c \
 			  parse/utils_to_map.c \
-			  parse/minolib.c \
-			  parse/utils_to_map2.c \
 			  main.c \
 			  graph/utils_to_mlx.c \
 			  graph/get_rgb.c \

@@ -6,7 +6,7 @@
 /*   By: cguiot <cguiot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:02:34 by cguiot            #+#    #+#             */
-/*   Updated: 2021/06/22 19:55:04 by cguiot           ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 19:14:02 by cguiot           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ void	init_struct(t_info *map, char **av)
 	map->pt_so_t = NULL;
 	map->pt_we_t = NULL;
 	map->pt_ea_t = NULL;
-	map->pt_sp_t = NULL;
-	map->py = 0;
-	map->px = 0;
+	map->filename = NULL;
 	map->filename = av[1];
 }
 
 int	search_keys(char *line, t_info *map)
 {
-	if ((line[0] == 'C') \
+	if ((line[0] == 'R') \
+	|| (line[0] == 'C') \
 	|| (line[0] == 'W' && line[1] == 'E') \
 	|| (line[0] == 'E' && line[1] == 'A') \
+	|| (line[0] == 'S') \
 	|| (line[0] == 'F') \
 	|| (line[0] == 'S' && line[1] == 'O') \
 	|| (line[0] == 'N' && line[1] == 'O') \
 	|| (line[0] == '\0'))
 		return (0);
-	return (rt(0,
-			"- information invalide or end of description but missing infos" \
+	return (rt(0, /*Map parsing can't start cause all necessary information aren't acquired yet*/
+			"- information invalide or end of description but missing infos"\
 			, map));
 }
