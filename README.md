@@ -9,5 +9,5 @@ USAGE :
     
     -Then configure your map in maps's folders (RGB to floor or ceiling and path to texture)
     
-    -finaly, you can tart the project with "./cub3D [your map]"
+    -finaly, you can start the project with "./cub3D [your map]"
   
